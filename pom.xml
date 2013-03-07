@@ -10,11 +10,6 @@
   <name>${project.artifactId}</name>
 
   <properties>
-    <!-- dependency versions -->
-    <dep.slf4j>1.7.2</dep.slf4j>
-    <dep.logback>1.0.7</dep.logback>
-    <dep.junit>4.10</dep.junit>
-
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -25,12 +20,6 @@
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>${dep.slf4j}</version>
     </dependency>
 
     <dependency>
