@@ -14,16 +14,20 @@ public final class MeatXmlParser {
     private static final SMInputFactory FACTORY = new SMInputFactory(new WstxInputFactory());
 
     public Food parse(InputStream xml) throws XMLStreamException {
-        SMHierarchicCursor rootC = FACTORY.rootElementCursor(xml);
-
-        rootC.advance();
-
-        SMInputCursor rootChildCursor = rootC.childElementCursor();
-
         Food food = new Food();
 
-        while (rootChildCursor.getNext() != null) {
-            handleRootChildElement(food, rootChildCursor);
+        SMHierarchicCursor rootC = FACTORY.rootElementCursor(xml);
+
+        try {
+            rootC.advance();
+
+            SMInputCursor rootChildCursor = rootC.childElementCursor();
+
+            while (rootChildCursor.getNext() != null) {
+                handleRootChildElement(food, rootChildCursor);
+            }
+        } finally {
+            rootC.getStreamReader().closeCompletely();
         }
 
         return food;
