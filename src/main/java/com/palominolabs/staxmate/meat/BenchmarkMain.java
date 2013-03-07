@@ -20,15 +20,12 @@ final class BenchmarkMain {
 
         System.out.println("Running stax");
 
-        for (int i = 0; i < ITERATIONS; i++) {
-            parser.parse(BenchmarkMain.class.getResourceAsStream("/sample.xml"));
-        }
+        runStax(parser);
 
         long staxStart = System.nanoTime();
 
-        for (int i = 0; i < ITERATIONS; i++) {
-            parser.parse(BenchmarkMain.class.getResourceAsStream("/sample.xml"));
-        }
+        runStax(parser);
+
         long staxEnd = System.nanoTime();
 
         System.out.println("Stax ns per iteration: " + (staxEnd - staxStart) / ITERATIONS);
@@ -38,18 +35,26 @@ final class BenchmarkMain {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
 
-        for (int i = 0; i < ITERATIONS; i++) {
-            db.parse(BenchmarkMain.class.getResourceAsStream("/sample.xml"));
-        }
+        runDom(db);
 
         long domStart = System.nanoTime();
 
-        for (int i = 0; i < ITERATIONS; i++) {
-            db.parse(BenchmarkMain.class.getResourceAsStream("/sample.xml"));
-        }
+        runDom(db);
 
         long domEnd = System.nanoTime();
 
         System.out.println("Dom ns per iteration: " + (domEnd - domStart) / ITERATIONS);
+    }
+
+    private static void runDom(DocumentBuilder db) throws SAXException, IOException {
+        for (int i = 0; i < ITERATIONS; i++) {
+            db.parse(BenchmarkMain.class.getResourceAsStream("/sample.xml"));
+        }
+    }
+
+    private static void runStax(MeatXmlParser parser) throws XMLStreamException {
+        for (int i = 0; i < ITERATIONS; i++) {
+            parser.parse(BenchmarkMain.class.getResourceAsStream("/sample.xml"));
+        }
     }
 }
